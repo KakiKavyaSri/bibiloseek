@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 
-def search_database(book_name, author, root):
+def search_database(book_name, author):
     try:
         db_connection = mysql.connector.connect(
             host="localhost",
@@ -24,8 +24,6 @@ def search_database(book_name, author, root):
         if row:
             # If book found, display all values of that row
             display_data(row)
-            # Close the main window
-            root.destroy()
         else:
             # If book not found, show message box
             messagebox.showinfo("Book Not Found", "The book '{}' by '{}' was not currently present in our Library.\nTHANK YOU🙏".format(book_name, author))
@@ -36,11 +34,6 @@ def search_database(book_name, author, root):
 def display_data(data):
     root = tk.Tk()
     root.title("Book Details")
-    
-    # # Background image
-    # background_image = tk.PhotoImage(file="../assets/libblurimage.png")
-    # background_label = tk.Label(root, image=background_image)
-    # background_label.place(relwidth=1, relheight=1)
     
     # Get the screen width and height
     screen_width = root.winfo_screenwidth()
@@ -78,37 +71,38 @@ def display_data(data):
     
     root.mainloop()
 
-# Create the main window
-root = tk.Tk()
-root.title("Book Search")
+def show_first_page():
+    # Create the main window for the first page
+    root = tk.Tk()
+    root.title("Book Search")
 
-# Background image
-background_image = tk.PhotoImage(file="../assets/libblurimage.png")
-background_label = tk.Label(root, image=background_image)
-background_label.place(relwidth=1, relheight=1)
+    # Background image
+    background_image = tk.PhotoImage(file="../assets/libblurimage.png")
+    background_label = tk.Label(root, image=background_image)
+    background_label.place(relwidth=1, relheight=1)
 
-# Get the screen width and height
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
+    # Get the screen width and height
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
 
-# Calculate the x and y coordinates to center the window
-x = (screen_width - 500) / 2
-y = (screen_height - 400) / 2
+    # Calculate the x and y coordinates to center the window
+    x = (screen_width - 500) / 2
+    y = (screen_height - 400) / 2
 
-# Set the position of the window
-root.geometry(f"500x400+{int(x)}+{int(y)}")
+    # Set the position of the window
+    root.geometry(f"500x400+{int(x)}+{int(y)}")
 
-# Labels and Entry fields for Book Name and Author
-tk.Label(root, text="Book Name:", font=("Arial", 20)).pack(pady=(50, 10))
-entry_book_name = tk.Entry(root, font=("Arial", 20))
-entry_book_name.pack(pady=10)
+    # Labels and Entry fields for Book Name and Author
+    tk.Label(root, text="Book Name:", font=("Arial", 20)).pack(pady=(50, 10))
+    entry_book_name = tk.Entry(root, font=("Arial", 20))
+    entry_book_name.pack(pady=10)
 
-tk.Label(root, text="Author:", font=("Arial", 20)).pack()
-entry_author = tk.Entry(root, font=("Arial", 20))
-entry_author.pack()
+    tk.Label(root, text="Author:", font=("Arial", 20)).pack()
+    entry_author = tk.Entry(root, font=("Arial", 20))
+    entry_author.pack()
 
-# Button to search the database
-btn_search = tk.Button(root, text="Search", command=lambda: search_database(entry_book_name.get(), entry_author.get(), root), bg="green", fg="white", font=("Arial", 20))
-btn_search.pack(pady=(20, 50))
+    # Button to search the database
+    btn_search = tk.Button(root, text="Search", command=lambda: search_database(entry_book_name.get(), entry_author.get()), bg="green", fg="white", font=("Arial", 20))
+    btn_search.pack(pady=(20, 50))
 
-root.mainloop()
+    root.mainloop()
