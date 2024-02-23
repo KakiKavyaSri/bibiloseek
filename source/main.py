@@ -60,55 +60,9 @@ class Login:
         self.page = Frame(self.root,width = 1000,height = 1000)
         self.page.place(x = 0,y = 0)
 
-        
-        self.bookAvai = Label(self.page,text = ' BOOK AVAILABLE!!',bg = 'green',fg = 'white',font = fonts,width = 20,height = 3)
-        self.bookAvai.place(x = 250,y = 30)
-
-        self.bookcontents = Label(self.page,text = ' BOOK CONTENTS : ',bg = 'grey',font = fonts,width = 16)
-        self.bookcontents.place(x = 75,y = 120)
-
-        self.booksection = Label(self.page,text = ' BOOK SECTION : ',bg = 'grey',font = fonts,width = 16)
-        self.booksection.place(x = 75,y = 180)
-
-        self.noofcopies = Label(self.page,text = 'NO OF COPIES : ',bg = 'grey',font = fonts,width = 16)
-        self.noofcopies.place(x = 75,y = 240)
-
-        self.bookratings = Label(self.page,text = ' BOOK REVIEWS : ',bg = 'grey',font = fonts,width = 16)
-        self.bookratings.place(x = 75,y = 290)
-
-        self.ratings = Label(self.page,text = ' RATING : ',bg = 'grey',font = fonts,width = 16)
-        self.ratings.place(x = 75,y = 440)
-
-
-        self.feedback = Label(self.page,text = ' FEEDBACK : ',bg = 'grey',font = fonts,width = 16)
-        self.feedback.place(x = 75,y = 500)
-
-        self.bookcontLabel = Label(self.page,text = 'It is a great story of Dedication & Achievement',bg = 'white',font = fonts)
-        self.bookcontLabel.place(x = 300,y = 120)
-
-        self.noofcopLabel = Label(self.page,text = '23',bg = 'white',font = fonts,width = 15)
-        self.noofcopLabel.place(x = 300,y = 240)
-
-        self.booksection_label = Label(self.page,text = ' Autobiographies ',bg = 'white',font = fonts,width = 20)
-        self.booksection_label.place(x = 300,y = 180)
-
-        self.bookratingsLabel = Label(self.page,text = 'Great Book ',bg = 'white',font = fonts,width = 20)
-        self.bookratingsLabel.place(x = 300,y = 290)
-
-        self.bookratingsLabel = Label(self.page,text = 'One must Read it ',bg = 'white',font = fonts,width = 20)
-        self.bookratingsLabel.place(x = 300,y = 330)
-
-        self.bookratingsLabel = Label(self.page,text = 'Excellent Book ',bg = 'white',font = fonts,width = 20)
-        self.bookratingsLabel.place(x = 300,y = 370)
-
-        self.bookratingsLabel = Label(self.page,text = ' 4.7 / 5 ',bg = 'white',font = fonts,width = 20)
-        self.bookratingsLabel.place(x = 300,y = 440)
-
-        # self.bookratingsLabel = Label(self.page,text = ' 1 star ( 2% ) ',bg = 'white',font = fonts,width = 20)
-        # self.bookratingsLabel.place(x = 300,y = 450)
-
-        self.book_name_entry = Entry(self.page,width = 30,font = fonts)
-        self.book_name_entry.place(x = 300,y = 500)
+        label_text = "Welcome to My Book"
+        label = Label(self.page, text=label_text, font=("Arial", 24), bg="lightblue", fg="black")
+        label.place(relx=0.5, rely=0.5, anchor="center")
 
 
 
