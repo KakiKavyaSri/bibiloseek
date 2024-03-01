@@ -1,83 +1,120 @@
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
-import source_code2  # Importing the first page module
+from PIL import Image, ImageTk
+import first_window
 
-def validate_login(root):
-    # Connect to the MySQL database
+# Define global variables
+root_login = None
+original_image = None
+background_label = None
+entry_username = None
+entry_password = None
+
+def validate_login():
+    global root_login
+    # Get username and password from entry widgets
+    username = entry_username.get()
+    password = entry_password.get()
+
+    # Connect to MySQL database
     try:
-        db_connection = mysql.connector.connect(
+        connection = mysql.connector.connect(
             host="localhost",
             user="root",
             password="Kavya@28245",
             database="loginpage"
         )
-        
-        cursor = db_connection.cursor()
 
-        # Get the username and password entered by the user
-        username = entry_username.get()
-        password = entry_password.get()
+        cursor = connection.cursor()
 
-        # Query to check if the entered username and password exist in the database
-        query = "SELECT * FROM users WHERE username = %s AND password = %s"
-        cursor.execute(query, (username, password))
-        result = cursor.fetchone()
+        # Query database for user
+        cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
+        user = cursor.fetchone()
 
-        if result:
-            messagebox.showinfo("Login Successful", "Welcome, " + username + "!")
-            root.destroy()  # Close the login window
-            source_code2.show_first_page()  # Call the function to show the first page
+        if user:
+            print(user)
+            messagebox.showinfo("Success", "Login Successful!")
+            root_login.destroy()  # Close login window
+            first_window.show_first_page()  # Open book details page
         else:
-            messagebox.showerror("Login Failed", "Invalid username or password")
+            messagebox.showerror("Error", "Invalid Username or Password")
 
     except mysql.connector.Error as error:
-        messagebox.showerror("Database Error", "Unable to connect to the database: {}".format(error))
+        messagebox.showerror("Error", f"Failed to connect to database: {error}")
 
     finally:
         # Close database connection
-        if 'db_connection' in locals() and db_connection.is_connected():
-            cursor.close()
-            db_connection.close()
+        if 'connection' in locals() or 'connection' in globals():
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
-# Create the main window
-root = tk.Tk()
-root.title("Login")
+def resize_image(event):
+    # Update window width and height
+    global window_width, window_height
+    window_width = max(event.width, 500)  # Increased minimum width to 500
+    window_height = max(event.height, 500)  # Increased minimum height to 400
 
-# Set window size and position it in the center of the screen
-window_width = 600  # Increased width
-window_height = 400  # Increased height
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
-x_coordinate = (screen_width - window_width) / 2
-y_coordinate = (screen_height - window_height) / 2
-root.geometry("%dx%d+%d+%d" % (window_width, window_height, x_coordinate, y_coordinate))
+    # Resize the image to fit the window
+    resized_image = original_image.resize((window_width, window_height))
+    new_image = ImageTk.PhotoImage(resized_image)
+    background_label.config(image=new_image)
+    background_label.image = new_image
 
-# Create labels and entry widgets for username and password
-label_username = tk.Label(root, text="Username:", font=("Helvetica", 20))
-label_username.grid(row=0, column=0, padx=20, pady=(50, 40), sticky=tk.W)  # Moved down a little
+# Create the main window for login page
+def show_login_page():
+    global root_login, original_image, background_label, entry_username, entry_password
 
-entry_username = tk.Entry(root, font=("Helvetica", 20))
-entry_username.grid(row=0, column=1, padx=20, pady=(50, 40))  # Moved down a little
+    root_login = tk.Tk()
+    root_login.title("Login")
 
-label_password = tk.Label(root, text="Password:", font=("Helvetica", 20))
-label_password.grid(row=1, column=0, padx=20, pady=(50,60), sticky=tk.W)
+    # Set initial window size
+    window_width = 500  # Increased initial width
+    window_height = 500  # Increased initial height
 
-entry_password = tk.Entry(root, show="*", font=("Helvetica", 20))
-entry_password.grid(row=1, column=1, padx=20, pady=(50,60))
+    # Set minimum window size
+    root_login.minsize(500, 500)  
 
-# Create a login button
-login_button = tk.Button(root, text="Login", font=("Helvetica", 20), command=lambda: validate_login(root))
-login_button.grid(row=2, column=0, columnspan=2, pady=20)  # Moved down a little
+    # Load background image
+    original_image = Image.open("C:/Users/LENOVO/Desktop/wise/assets/sanj4.jpg")  
+    resized_image = original_image.resize((window_width, window_height))
+    background_photo = ImageTk.PhotoImage(resized_image)
 
-# Set the font and font size for all widgets
-font = ("Helvetica", 14)
-root.option_add("*Font", font)
+    # Create a label with the background image
+    background_label = tk.Label(root_login, image=background_photo)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-# Set background and foreground colors
-root.configure(bg="#f0f0f0")  # Light gray background
-root.option_add("*background", "#f0f0f0")
-root.option_add("*foreground", "black")
+    # Bind the resize event
+    root_login.bind("<Configure>", resize_image)
 
-# Run the Tkinter event loop
-root.mainloop()
+    # Define very light brown color aesthetic background
+    bg_color = "#ab8572"  # Very light brown
+
+    # Create a frame to hold the widgets
+    frame = tk.Frame(root_login, bg=bg_color, bd=5, relief=tk.FLAT, width=400, height=600)  # Increased frame width and height
+    frame.place(relx=0.1, rely=0.5, anchor=tk.W)  # Positioned towards the left
+
+    # Create labels and entry widgets for username
+    label_username = tk.Label(frame, text="Username", font=("Helvetica", 23), fg="black", bg=bg_color)
+    label_username.grid(row=0, column=0, pady=5, sticky="w")
+
+    entry_username = tk.Entry(frame, font=("Helvetica", 23))
+    entry_username.grid(row=1, column=0, pady=5)
+
+    # Create labels and entry widgets for password
+    label_password = tk.Label(frame, text="Password", font=("Helvetica", 23), fg="black", bg=bg_color)
+    label_password.grid(row=2, column=0, pady=5, sticky="w")
+
+    entry_password = tk.Entry(frame, show="*", font=("Helvetica", 23))
+    entry_password.grid(row=3, column=0, pady=5)
+
+    # Create a login button
+    login_button = tk.Button(frame, text="Login", font=("Helvetica", 23, "bold"), bg="#D2B48C", fg="black", command=validate_login, bd=0, width=10)
+    login_button.grid(row=4, column=0, pady=20)
+
+    # Run the Tkinter event loop for login page
+    root_login.mainloop()
+
+if __name__ == "__main__":
+    show_login_page()
