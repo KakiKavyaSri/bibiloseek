@@ -17,7 +17,7 @@ def main():
 
     # Load images
     image1 = Image.open("../assets/sanj6.jpg")
-    image2 = Image.open("../assets/sanj11.jpg")
+    image2 = Image.open("../assets/san.jpg")
 
     # Resize image2 to match the screen dimensions
     image2 = image2.resize((screen_width, screen_height))
