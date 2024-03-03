@@ -49,11 +49,6 @@ def display_data(data, book_name, author):
     screen_width = root_second.winfo_screenwidth()
     screen_height = root_second.winfo_screenheight()
     root_second.geometry(f"{screen_width}x{screen_height}+0+0")
-
-    # # Create a frame
-    # frame = tk.Frame(feedback_window, bg="lightblue")
-    # frame.pack(fill=tk.BOTH, expand=True)
-
     
     # Load background image
     background_image = Image.open("../assets/sanj2.jpg")
@@ -82,6 +77,7 @@ def display_data(data, book_name, author):
         label_name.grid(row=i, column=0, padx=(50,10), pady=10, sticky="w")
         label_value = tk.Label(frame, text=str(value), bg="#e8c08c", fg="black", font=("Arial", 30))  # Adjust font size here
         label_value.grid(row=i, column=1, padx=(10,50), pady=10, sticky="w")
+
     # Create a feedback button
     def display_feedback():
         root_second.destroy()  # Destroy second window
@@ -138,11 +134,6 @@ def display_feedback_data(feedback_data):
     screen_width = feedback_window.winfo_screenwidth()
     screen_height = feedback_window.winfo_screenheight()
     feedback_window.geometry(f"{screen_width}x{screen_height}+0+0")
-
-    # # Create a frame
-    # frame = tk.Frame(feedback_window, bg="lightblue")
-    # frame.pack(fill=tk.BOTH, expand=True)
-
     
     # Load background image
     background_image = Image.open("../assets/sanj.jpg")
@@ -217,15 +208,6 @@ def show_first_page():
 
     # Set the position of the window
     root_first.geometry(f"{screen_width}x{screen_height}+0+0")
-
-    # # # Labels and Entry fields for Book Name and Author
-    # tk.Label(root_first, text="Book Name:", font=("Arial", 20)).pack(pady=(screen_height//10, screen_height//20))
-    # entry_book_name = tk.Entry(root_first, font=("Arial", 20))
-    # entry_book_name.pack(pady=screen_height//20)
-
-    # tk.Label(root_first, text="Author:", font=("Arial", 20)).pack()
-    # entry_author = tk.Entry(root_first, font=("Arial", 20))
-    # entry_author.pack()
         
     # Create a frame for the book name
     frame_book_name = tk.Frame(root_first)

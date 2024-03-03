@@ -43,7 +43,7 @@ def main():
     gap = 50  # Adjust the gap as needed
     text_label = tk.Label(root, text="WELCOME BOOK SEEKER!!", font=("Helvetica", 30, "bold"), bg="Sienna")
     text_label.place(x=x_center - 40, y=y_center + image1.height + gap)  # Adjust the y-coordinate and gap as needed
-    text_label.update_idletasks()  # Ensure the label is properly placed
+    text_label.update_idletasks()  # Ensure the label is properly placed - a method that processes all pending events and updates the GUI immediately.
 
     # Create a button below the label
     button = tk.Button(root, text="Let's Go", font=("Helvetica", 16), bg="grey", fg="white", command=open_login_page)

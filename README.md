@@ -25,6 +25,7 @@ The system also includes a feedback feature, where users can view feedback provi
 - Tkinter
 - PIL (Python Imaging Library)
 - MySQL(database)
+- Latex(ppt)
 
 ## Installation
 
@@ -38,14 +39,16 @@ Install dependencies
 
 2. Install dependencies:
 
-    bash
-    pip install tkinter pillow
+    pip install tkinter,pillow
+    pip install mysql-connector-python
+    python.exe -m pip install --upgrade pip -
+
+
     
 
 3. Run the application:
 
-    bash
-    python main.py
+    python main_file.py
     
     
 ## Usage
@@ -63,5 +66,4 @@ Install dependencies
 
 To search for a book by title and author, use the following command:
 
-```bash
-python main.py --search "The Great Gatsby" --author "F. Scott Fitzgerald"
+python first_window.py --search "The Great Gatsby" --author "F. Scott Fitzgerald"
